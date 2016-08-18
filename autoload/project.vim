@@ -16,13 +16,16 @@ command! -nargs=0 -bar Welcome
 command! -nargs=1 -bang -complete=custom,project#config#choices GoProject
 \ call project#config#goto("<bang>", <q-args>)
 
-if has("gui_running")
+if has("gui_running") && get(g:, 'project_enable_tab_title', 1)
   function! TabTitle()
     let title = expand("%:p:t")
     let t:title = exists("b:title") ? b:title : title
   endfunction
 
   au VimEnter * set guitablabel=%-2.2N%{gettabvar(v:lnum,'title')}
+endif
+
+if has("gui_running") && get(g:, 'project_enable_win_title', 1)
   set title
 endif
 

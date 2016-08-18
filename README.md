@@ -1,4 +1,5 @@
 ## News
+* New options ``project_enable_tab_title`` and ``project_enable_win_title``.
 * New command ``GoProject`` to select a project from the ``cmdline mode``
 * [New feature](#callbacks) ``project#utils#alternate``. To alternate between `file.ext` and
   ``file_suffix.ext`` or ``fileSuffix.ext`` with the command ``:A``
@@ -88,7 +89,7 @@ switch to the alternate files like the plugin [vim-rake](https://github.com/tpop
 
 ```vim
 " :A :AE :AS :AV :AT :AD :AR . They all accept the bang (!)
-" Remembet that the title of the project is only the last dir of the path
+" Remember that the title of the project is only the last dir of the path
 Project  'nugg.ad/nuggad-compiler'
 
 " project#utils#alternate returns a dictionary with a method ``invoke(title)``.
@@ -121,7 +122,9 @@ If you don't use either plugin management system, copy the `plugin` directory to
 Windows: $HOME/vimfiles
 
 ## Configure
-sample ``.vimrc``:
+See [below](##options) for available options.
+
+Sample ``.vimrc``:
 
 ```vim
 let g:project_use_nerdtree = 1
@@ -163,6 +166,39 @@ Project  '~/.vim/bundle/ctrlp.vim'              , 'ctrlp'
 Project  '~/.vim/bundle/ctrlp-z'                , 'ctrlp-z'
 Project  '~/.vim/bundle/vim-eval'               , 'eval'
 ```
+
+## Options
+* ``project_enable_welcome``: show project list on start (values: 0, 1; default: 1). When set
+to 1, the 'welcome' project list screen is displayed when vim is started with an empty buffer.
+  ```vim
+  g:project_enable_welcome=0
+  ```
+
+* ``project_use_nerdtree``: NERDTree integration (values: 0, 1; default: 0). When set to 1, integration
+with NERDtree is enabled.
+  ```vim
+  g:project_use_nerdtree=1
+  ```
+
+* ``project_unlisted_buffer``: hide 'welcome' buffer from buffer list (values: 0, 1; default: 1).
+When set to 1, the 'welcome' project list buffer does not appear in the buffer list (nobuflisted is
+set).
+   ```vim
+   g:project_unlisted_buffer=0
+   ```
+
+* ``project_enable_tab_title``: show project name in tab title (values: 0, 1; default: 1).
+When set to 1, the project to which the file belongs is shown in the tab's title in GUI vim.
+  ```vim
+  g:project_enable_tab_title=0
+  ```
+
+* ``project_enable_win_title``: show current working directory in window title (values: 0, 1;
+default: 1). When set to 1, the current working directory is shown in the window's title bar in GUI
+vim.
+  ```vim
+  g:project_enable_win_title=0
+  ```
 
 ## Interactive
 From the ``cmdline mode``.

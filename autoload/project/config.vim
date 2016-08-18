@@ -179,20 +179,20 @@ function! project#config#welcome() abort
   call cursor(special ? 4 : 2, 5)
 endfunction
 
-function! project#config#goto(title) abort
+function! project#config#goto(bang, title) abort
   if has_key(s:projects, a:title)
     let v = s:projects[a:title]
-    if v["type"] == "project"
-      let file = v["project"]
-      let lcd = " | lcd ".v["project"]
+    if v['type'] == 'project'
+      let file = v['project']
+      let lcd = ' | lcd ' . v['project']
     else
-      let file = v["event"]
-      let lcd = ""
+      let file = v['event']
+      let lcd = ''
     endif
     if get(g:, 'project_use_nerdtree', 0) && isdirectory(file)
-      execute 'enew | NERDTree '. s:escape(file).lcd
+      execute 'enew' . a:bang . ' | NERDTree ' . s:escape(file) . lcd
     else
-      execute 'edit '. s:escape(file).lcd
+      execute 'edit' . a:bang . ' ' . s:escape(file) . lcd
     endif
   else
     echo 'Unknown project ' . a:title

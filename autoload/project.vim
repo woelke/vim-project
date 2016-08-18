@@ -13,8 +13,8 @@ command! -complete=file -nargs=+ ProjectPath
 command! -nargs=0 -bar Welcome
 \ enew | call project#config#welcome()
 
-command! -nargs=1 -complete=custom,project#config#choices GoProject
-\ call project#config#goto(<q-args>)
+command! -nargs=1 -bang -complete=custom,project#config#choices GoProject
+\ call project#config#goto("<bang>", <q-args>)
 
 if has("gui_running")
   function! TabTitle()

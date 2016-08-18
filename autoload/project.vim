@@ -16,13 +16,36 @@ command! -nargs=0 -bar Welcome
 command! -nargs=1 -bang -complete=custom,project#config#choices GoProject
 \ call project#config#goto("<bang>", <q-args>)
 
-if has("gui_running") && get(g:, 'project_enable_tab_title', 1)
+if (has("gui_running") && get(g:, 'project_enable_tab_title_gui', 1)) ||
+\ (!has("gui_running") && get(g:, 'project_enable_tab_title_term'))
   function! TabTitle()
     let title = expand("%:p:t")
     let t:title = exists("b:title") ? b:title : title
   endfunction
 
-  au VimEnter * set guitablabel=%-2.2N%{gettabvar(v:lnum,'title')}
+  if has("gui_running") && get(g:, 'project_enable_tab_title_gui', 1)
+    au VimEnter * set guitablabel=%-2.2N%{gettabvar(v:lnum,'title')}
+  endif
+
+  if !has("gui_running") && get(g:, 'project_enable_tab_title_term')
+    " Adapted from https://github.com/mkitt/tabline.vim/blob/master/plugin/tabline.vim
+    function! TabLine() abort
+      let s = ''
+
+      for t in range(tabpagenr('$'))
+        let tn = t + 1
+
+        let s .= '%' . tn . 'T' 
+        let s .= (tn == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#')
+        let s .= ' ' . tn . ' ' . gettabvar(tn, 'title') . ' '
+      endfor
+
+      let s .= '%#TabLineFill#'
+      return s
+    endfunction
+
+    set tabline=%!TabLine()
+  endif
 endif
 
 if has("gui_running") && get(g:, 'project_enable_win_title', 1)

@@ -1,5 +1,6 @@
 ## News
-* New options ``project_enable_tab_title`` and ``project_enable_win_title``.
+* Add support for tabline; new option ``project_enable_tab_title_term``.
+* New options ``project_enable_tab_title_gui`` and ``project_enable_win_title``.
 * New command ``GoProject`` to select a project from the ``cmdline mode``
 * [New feature](#callbacks) ``project#utils#alternate``. To alternate between `file.ext` and
   ``file_suffix.ext`` or ``fileSuffix.ext`` with the command ``:A``
@@ -187,10 +188,16 @@ set).
    g:project_unlisted_buffer=0
    ```
 
-* ``project_enable_tab_title``: show project name in tab title (values: 0, 1; default: 1).
+* ``project_enable_tab_title_gui``: show project name in tab title (values: 0, 1; default: 1).
 When set to 1, the project to which the file belongs is shown in the tab's title in GUI vim.
   ```vim
-  g:project_enable_tab_title=0
+  g:project_enable_tab_title_gui=0
+  ```
+
+* ``project_enable_tab_title_term``: show project name in tab title (values: 0, 1; default: 0).
+When set to 1, the project to which the file belongs is shown in the tab's title in terminal vim.
+  ```vim
+  g:project_enable_tab_title_term=1
   ```
 
 * ``project_enable_win_title``: show current working directory in window title (values: 0, 1;

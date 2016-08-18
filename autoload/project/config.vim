@@ -42,6 +42,19 @@ function! project#config#callback(title, callback) abort
   call s:setup()
 endfunction
 
+function! project#config#callback_all_type(type, callback) abort
+  for v in values(s:projects)
+    if v["type"] == a:type
+      if type(a:callback) == type([])
+        call extend(v["callbacks"], a:callback)
+      else
+        call add(v["callbacks"], a:callback)
+      endif
+    endif
+  endfor
+  call s:setup()
+endfunction
+
 function! project#config#title(filename, title) abort
   let filename = s:full_path(a:filename)
   if !filereadable(filename)

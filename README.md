@@ -1,4 +1,5 @@
 ## News
+* New command ``CallbackAllProjects`` to add a callback to all defined projects.
 * Add support for tabline; new option ``project_enable_tab_title_term``.
 * New options ``project_enable_tab_title_gui`` and ``project_enable_win_title``.
 * New command ``GoProject`` to select a project from the ``cmdline mode``
@@ -20,7 +21,7 @@ Every time you open a file nested in the ``root of the project``
 ![img][0]
 
 ## Commands
-There are five commands :
+There are six commands :
 * ``Project``
 It's used inside the ``.vimrc``. The first parameter is the ``path`` to the
 project. The second parameter is optional and it is the ``title`` of the
@@ -54,6 +55,9 @@ the name a function or an array of function names. This function or these
 functions are callbacks and they are executed every time a file nested in the
 ``root of the project`` is opened with **one parameter** that is the ``title``
 of the project.
+* ``CallbackAllProjects``
+It's used inside the ``.vimrc``. The first parameter is the name of a function or an array of
+function names. This callback is added to all projects that have been defined so far.
 * ``GoProject``
 It's used inside the ``cmdline mode`` to switch to one of the defined projects.
 The required parameter is the ``title`` of the project without quotation. Completion

@@ -7,6 +7,9 @@ command! -nargs=+ File
 command! -nargs=+ Callback
 \ call project#config#callback(<args>)
 
+command! -nargs=+ CallbackAllProjects
+\ call project#config#callback_all_type('project', <args>)
+
 command! -complete=file -nargs=+ ProjectPath
 \ call project#config#project_path(<f-args>)
 

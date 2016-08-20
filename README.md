@@ -1,4 +1,5 @@
 ## News
+* New commands ``TabWelcome`` and ``TabProject``
 * New command ``CallbackAllProjects`` to add a callback to all defined projects.
 * Add support for tabline; new option ``project_enable_tab_title_term``.
 * New options ``project_enable_tab_title_gui`` and ``project_enable_win_title``.
@@ -21,7 +22,7 @@ Every time you open a file nested in the ``root of the project``
 ![img][0]
 
 ## Commands
-There are six commands :
+There are eight commands :
 * ``Project``
 It's used inside the ``.vimrc``. The first parameter is the ``path`` to the
 project. The second parameter is optional and it is the ``title`` of the
@@ -62,6 +63,7 @@ function names. This callback is added to all projects that have been defined so
 It's used inside the ``cmdline mode`` to switch to one of the defined projects.
 The required parameter is the ``title`` of the project without quotation. Completion
 is supported.
+* ``TabProject`` is like ``GoProject``, but opens the project in a new tab.
 * ``Welcome`` It's the [``Startify``](https://github.com/mhinz/vim-startify) equivalent.
 If you don't want ``Welcome`` to appear when you start vim:
 
@@ -74,6 +76,7 @@ let g:project_use_nerdtree = 1
 set rtp+=~/.vim/bundle/vim-project/
 call project#rc("~/Code")
 ```
+* ``TabWelcome`` is like ``Welcome``, but opens in a new tab.
 
 ![Welcome](https://pbs.twimg.com/media/BJH4RgDCcAEYv4E.png:large)
 

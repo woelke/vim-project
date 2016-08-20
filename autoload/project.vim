@@ -19,6 +19,12 @@ command! -nargs=0 -bar Welcome
 command! -nargs=1 -bang -complete=custom,project#config#choices GoProject
 \ call project#config#goto("<bang>", <q-args>)
 
+command! -nargs=1 -bang -complete=custom,project#config#choices TabProject
+\ tabe | call project#config#goto("<bang>", <q-args>)
+
+command! -nargs=0 -bar TabWelcome
+\ tabe | call project#config#welcome()
+
 if (has("gui_running") && get(g:, 'project_enable_tab_title_gui', 1)) ||
 \ (!has("gui_running") && get(g:, 'project_enable_tab_title_term'))
   function! TabTitle()

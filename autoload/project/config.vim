@@ -30,7 +30,7 @@ function! project#config#project(arg, ...) abort
 endfunction
 
 function! project#config#callback(title, callback) abort
-  if type(a:callback) == type([])
+  if type(a:callback) ==# type([])
     let callbacks = a:callback
   else
     let callbacks = [a:callback]
@@ -44,8 +44,8 @@ endfunction
 
 function! project#config#callback_all_type(type, callback) abort
   for v in values(s:projects)
-    if v["type"] == a:type
-      if type(a:callback) == type([])
+    if v["type"] ==# a:type
+      if type(a:callback) ==# type([])
         call extend(v["callbacks"], a:callback)
       else
         call add(v["callbacks"], a:callback)
@@ -84,7 +84,7 @@ function! s:callback(title) abort
   let callbacks = project["callbacks"]
   if len(callbacks) > 0
     for callback in callbacks
-      if type(callback) == type("")
+      if type(callback) ==# type("")
         execute "call ".callback."(\"".a:title."\")"
       else
         call callback.invoke(a:title)
@@ -104,7 +104,7 @@ endfunction
 function! project#config#welcome() abort
   if !empty(v:servername) && exists('g:project_skiplist_server')
     for servname in g:project_skiplist_server
-      if (servname == v:servername)
+      if (servname ==? v:servername)
         return
       endif
     endfor
@@ -135,7 +135,7 @@ function! project#config#welcome() abort
   let max_title_length = 0
   let max_file_length = 0
   for v in projects
-    if v["type"] == "project"
+    if v["type"] ==# "project"
       let file = v["project"]
     else
       let file = v["event"]
@@ -148,7 +148,7 @@ function! project#config#welcome() abort
     endif
   endfor
   for v in projects
-    if v["type"] == "project"
+    if v["type"] ==# "project"
       let file = v["project"]
       let lcd = " \\| lcd ".v["project"]
     else
@@ -195,7 +195,7 @@ endfunction
 function! project#config#goto(bang, title) abort
   if has_key(s:projects, a:title)
     let v = s:projects[a:title]
-    if v['type'] == 'project'
+    if v['type'] ==# 'project'
       let file = v['project']
       let lcd = ' | lcd ' . v['project']
     else
@@ -245,7 +245,7 @@ function! s:setup() abort
     autocmd!
     let projects = sort(values(s:projects), "s:sort")
     for v in projects
-      if v["type"] == "project"
+      if v["type"] ==# "project"
         let autocmd = "autocmd BufEnter ".s:back_to_slash(v["event"])." lcd ".v["project"]." | let b:title = \"".v["title"]."\" | call s:callback(\"".v["title"]."\")"
       else
         let autocmd = "autocmd BufEnter ".s:back_to_slash(v["event"])." let b:title = \"".v["title"]."\" | call s:callback(\"".v["title"]."\")"

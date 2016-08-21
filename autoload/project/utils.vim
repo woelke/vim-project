@@ -44,3 +44,10 @@ function! project#utils#alternate(arguments) abort
   return object
 endfunction
 
+function! project#utils#refresh() abort
+    " From https://github.com/vim-airline/vim-airline/pull/935/files
+    set mod!
+    redraw
+    set mod!
+endfunction
+

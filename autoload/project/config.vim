@@ -252,9 +252,13 @@ function! s:setup() abort
       endif
       execute autocmd
     endfor
-    if (has("gui_running") && get(g:, 'project_enable_tab_title_gui', 1)) ||
-    \ (!has("gui_running") && get(g:, 'project_enable_tab_title_term'))
+    if has("gui_running") && get(g:, 'project_enable_tab_title_gui', 1)
       au BufEnter,BufRead,WinEnter * call TabTitle()
+    endif
+    if !has("gui_running") && get(g:, 'project_enable_tab_title_term')
+      au BufEnter,BufRead,WinEnter * call TabTitle()
+      " Force refresh of tabline when switching/closing windows
+      au WinEnter * call project#utils#refresh()
     endif
     if has("gui_running") && get(g:, 'project_enable_win_title', 1)
       au BufEnter,BufRead,WinEnter * let &titlestring = getcwd()

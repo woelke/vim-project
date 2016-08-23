@@ -29,6 +29,26 @@ function! project#config#project(arg, ...) abort
   call s:setup()
 endfunction
 
+function! project#config#section(arg, ...) abort
+  if a:arg[0] ==# "/" || a:arg[0] ==# "~" || a:arg[1] ==# ':'
+    let project = s:full_path(a:arg)
+  else
+    let project = s:full_path(g:project_dir.s:get_sep().a:arg)
+  endif
+  if len(a:000) > 0
+    let title = a:1
+  else
+    let title = fnamemodify(project, ":t")
+  endif
+  let event = project.s:get_sep()."*"
+  if !isdirectory(project)
+    return
+  endif
+  let s:projects[title] = { "type": "section", "event": event, "project": project, "title": title, "callbacks": [], "pos": s:pos}
+  let s:pos += 1
+  call s:setup()
+endfunction
+
 function! project#config#callback(title, callback) abort
   if type(a:callback) ==# type([])
     let callbacks = a:callback
@@ -135,7 +155,7 @@ function! project#config#welcome() abort
   let max_title_length = 0
   let max_file_length = 0
   for v in projects
-    if v["type"] ==# "project"
+    if (v["type"] ==# "project") || (v["type"] ==# "section")
       let file = v["project"]
     else
       let file = v["event"]
@@ -148,7 +168,7 @@ function! project#config#welcome() abort
     endif
   endfor
   for v in projects
-    if v["type"] ==# "project"
+    if (v["type"] ==# "project") || (v["type"] ==# "section")
       let file = v["project"]
       let lcd = " \\| lcd ".v["project"]
     else
@@ -195,7 +215,7 @@ endfunction
 function! project#config#goto(bang, title) abort
   if has_key(s:projects, a:title)
     let v = s:projects[a:title]
-    if v['type'] ==# 'project'
+    if (v["type"] ==# "project") || (v["type"] ==# "section")
       let file = v['project']
       let lcd = ' | lcd ' . v['project']
     else

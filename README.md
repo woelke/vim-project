@@ -1,4 +1,5 @@
 ## News
+* New entity type 'section'; new commands Section and CallbackAllSections
 * New commands ``TabWelcome`` and ``TabProject``
 * New command ``CallbackAllProjects`` to add a callback to all defined projects.
 * Add support for tabline; new option ``project_enable_tab_title_term``.
@@ -22,7 +23,7 @@ Every time you open a file nested in the ``root of the project``
 ![img][0]
 
 ## Commands
-There are eight commands :
+There are ten commands :
 * ``Project``
 It's used inside the ``.vimrc``. The first parameter is the ``path`` to the
 project. The second parameter is optional and it is the ``title`` of the
@@ -49,6 +50,10 @@ If the ``path`` to the project is a relative path, it's combined with
 It's used inside the ``.vimrc``. The first parameter is the ``path`` to
 the file. The second parameter is the ``title`` of the file. This command
 doesn't change the ``local current directory``.
+* ``Section``
+It's used inside the ``.vimrc``. Similar to ``Project``, except that lcd is executed only when the
+section is selected from the Welcome menu or with GoProject or TabProject. The lcd is not changed
+when opening a file in the section.
 * ``Callback``
 It's used inside the ``.vimrc``. The first parameter is the ``title`` of a
 project already defined with ``Project`` or ``File``. The second parameter is
@@ -59,6 +64,9 @@ of the project.
 * ``CallbackAllProjects``
 It's used inside the ``.vimrc``. The first parameter is the name of a function or an array of
 function names. This callback is added to all projects that have been defined so far.
+* ``CallbackAllSections``
+It's used inside the ``.vimrc``. The first parameter is the name of a function or an array of
+function names. This callback is added to all sections that have been defined so far.
 * ``GoProject``
 It's used inside the ``cmdline mode`` to switch to one of the defined projects.
 The required parameter is the ``title`` of the project without quotation. Completion

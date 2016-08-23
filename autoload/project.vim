@@ -1,6 +1,9 @@
 command! -nargs=+ Project
 \ call project#config#project(<args>)
 
+command! -nargs=+ Section
+\ call project#config#section(<args>)
+
 command! -nargs=+ File
 \ call project#config#title(<args>)
 
@@ -9,6 +12,9 @@ command! -nargs=+ Callback
 
 command! -nargs=+ CallbackAllProjects
 \ call project#config#callback_all_type('project', <args>)
+
+command! -nargs=+ CallbackAllSections
+\ call project#config#callback_all_type('section', <args>)
 
 command! -complete=file -nargs=+ ProjectPath
 \ call project#config#project_path(<f-args>)

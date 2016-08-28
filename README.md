@@ -1,10 +1,19 @@
+**This is a FORK of https://github.com/amiorin/vim-project**
+
+Changes:
+
+- New command ``GoProject`` to select a project from the ``cmdline mode``
+- New options ``project_enable_tab_title_gui`` and ``project_enable_win_title``.
+- Add support for tabline; new option ``project_enable_tab_title_term``.
+- New command ``CallbackAllProjects`` to add a callback to all defined projects.
+- New commands ``TabWelcome`` and ``TabProject``
+- New entity type 'section'; new commands Section and CallbackAllSections
+
+Changes are licensed under the same terms as the original
+
+# Original README
+
 ## News
-* New entity type 'section'; new commands Section and CallbackAllSections
-* New commands ``TabWelcome`` and ``TabProject``
-* New command ``CallbackAllProjects`` to add a callback to all defined projects.
-* Add support for tabline; new option ``project_enable_tab_title_term``.
-* New options ``project_enable_tab_title_gui`` and ``project_enable_win_title``.
-* New command ``GoProject`` to select a project from the ``cmdline mode``
 * [New feature](#callbacks) ``project#utils#alternate``. To alternate between `file.ext` and
   ``file_suffix.ext`` or ``fileSuffix.ext`` with the command ``:A``
 * [Windows support added](https://twitter.com/amiorin/status/336003331984076800)

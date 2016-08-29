@@ -54,6 +54,7 @@ vim.
   ```vim
   g:project_enable_win_title=0
   ```
+
 # Original README
 
 ## News

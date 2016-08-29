@@ -9,6 +9,8 @@ Changes:
 - New commands ``TabWelcome`` and ``TabProject``
 - New entity type 'section'; new commands ``Section`` and ``CallbackAllSections``
 
+Changes are licensed under the same terms as the original
+
 New Commands:
 
 * ``CallbackAllProjects``
@@ -28,7 +30,6 @@ is supported.
 It's used inside the ``.vimrc``. Similar to ``Project``, except that lcd is executed only when the
 section is selected from the Welcome menu or with GoProject or TabProject. The lcd is not changed
 when opening a file in the section.
-Changes are licensed under the same terms as the original
 
 * ``TabProject`` is like ``GoProject``, but opens the project in a new tab.
 

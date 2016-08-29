@@ -7,10 +7,53 @@ Changes:
 - Add support for tabline; new option ``project_enable_tab_title_term``.
 - New command ``CallbackAllProjects`` to add a callback to all defined projects.
 - New commands ``TabWelcome`` and ``TabProject``
-- New entity type 'section'; new commands Section and CallbackAllSections
+- New entity type 'section'; new commands ``Section`` and ``CallbackAllSections``
 
+New Commands:
+
+* ``CallbackAllProjects``
+It's used inside the ``.vimrc``. The first parameter is the name of a function or an array of
+function names. This callback is added to all projects that have been defined so far.
+
+* ``CallbackAllSections``
+It's used inside the ``.vimrc``. The first parameter is the name of a function or an array of
+function names. This callback is added to all sections that have been defined so far.
+
+* ``GoProject``
+It's used inside the ``cmdline mode`` to switch to one of the defined projects.
+The required parameter is the ``title`` of the project without quotation. Completion
+is supported.
+
+* ``Section``
+It's used inside the ``.vimrc``. Similar to ``Project``, except that lcd is executed only when the
+section is selected from the Welcome menu or with GoProject or TabProject. The lcd is not changed
+when opening a file in the section.
 Changes are licensed under the same terms as the original
 
+* ``TabProject`` is like ``GoProject``, but opens the project in a new tab.
+
+* ``TabWelcome`` is like ``Welcome``, but opens in a new tab.
+
+New Options:
+
+* ``project_enable_tab_title_gui``: show project name in tab title (values: 0, 1; default: 1).
+When set to 1, the project to which the file belongs is shown in the tab's title in GUI vim.
+  ```vim
+  g:project_enable_tab_title_gui=0
+  ```
+
+* ``project_enable_tab_title_term``: show project name in tab title (values: 0, 1; default: 0).
+When set to 1, the project to which the file belongs is shown in the tab's title in terminal vim.
+  ```vim
+  g:project_enable_tab_title_term=1
+  ```
+
+* ``project_enable_win_title``: show current working directory in window title (values: 0, 1;
+default: 1). When set to 1, the current working directory is shown in the window's title bar in GUI
+vim.
+  ```vim
+  g:project_enable_win_title=0
+  ```
 # Original README
 
 ## News
@@ -21,10 +64,10 @@ Changes are licensed under the same terms as the original
 ## Introduction
 A Project is made of :
 * One directory (the ``root of the project``)
-* One title (by default the last part of the ``root of the project``)
+* One title (by default the last part of the the ``root of the project``)
 * One or more ``callbacks``
 
-Every time you open a file nested in the ``root of the project``
+Everytime you open a file nested in the ``root of the project``
 * the ``local current directory`` is changed to the ``root of the project``
 * the ``guitablabel`` is set to the ``title`` of the project
 * the ``callbacks`` of the project are executed
@@ -32,7 +75,7 @@ Every time you open a file nested in the ``root of the project``
 ![img][0]
 
 ## Commands
-There are ten commands :
+There are four commands :
 * ``Project``
 It's used inside the ``.vimrc``. The first parameter is the ``path`` to the
 project. The second parameter is optional and it is the ``title`` of the
@@ -59,28 +102,13 @@ If the ``path`` to the project is a relative path, it's combined with
 It's used inside the ``.vimrc``. The first parameter is the ``path`` to
 the file. The second parameter is the ``title`` of the file. This command
 doesn't change the ``local current directory``.
-* ``Section``
-It's used inside the ``.vimrc``. Similar to ``Project``, except that lcd is executed only when the
-section is selected from the Welcome menu or with GoProject or TabProject. The lcd is not changed
-when opening a file in the section.
 * ``Callback``
 It's used inside the ``.vimrc``. The first parameter is the ``title`` of a
 project already defined with ``Project`` or ``File``. The second parameter is
 the name a function or an array of function names. This function or these
-functions are callbacks and they are executed every time a file nested in the
+functions are callbacks and they are executed everytime a file nested in the
 ``root of the project`` is opened with **one parameter** that is the ``title``
 of the project.
-* ``CallbackAllProjects``
-It's used inside the ``.vimrc``. The first parameter is the name of a function or an array of
-function names. This callback is added to all projects that have been defined so far.
-* ``CallbackAllSections``
-It's used inside the ``.vimrc``. The first parameter is the name of a function or an array of
-function names. This callback is added to all sections that have been defined so far.
-* ``GoProject``
-It's used inside the ``cmdline mode`` to switch to one of the defined projects.
-The required parameter is the ``title`` of the project without quotation. Completion
-is supported.
-* ``TabProject`` is like ``GoProject``, but opens the project in a new tab.
 * ``Welcome`` It's the [``Startify``](https://github.com/mhinz/vim-startify) equivalent.
 If you don't want ``Welcome`` to appear when you start vim:
 
@@ -93,7 +121,6 @@ let g:project_use_nerdtree = 1
 set rtp+=~/.vim/bundle/vim-project/
 call project#rc("~/Code")
 ```
-* ``TabWelcome`` is like ``Welcome``, but opens in a new tab.
 
 ![Welcome](https://pbs.twimg.com/media/BJH4RgDCcAEYv4E.png:large)
 
@@ -114,12 +141,12 @@ switch to the alternate files like the plugin [vim-rake](https://github.com/tpop
 
 ```vim
 " :A :AE :AS :AV :AT :AD :AR . They all accept the bang (!)
-" Remember that the title of the project is only the last dir of the path
+" Remembet that the title of the project is only the last dir of the path
 Project  'nugg.ad/nuggad-compiler'
 
 " project#utils#alternate returns a dictionary with a method ``invoke(title)``.
 "
-" every time we open a file inside the project if the path starts with
+" everytime we open a file inside the project if the path starts with
 " ``spec`` or ``src`` the commands :A are defined.
 "
 " +_spec means add _spec to the file
@@ -147,9 +174,7 @@ If you don't use either plugin management system, copy the `plugin` directory to
 Windows: $HOME/vimfiles
 
 ## Configure
-See [below](##options) for available options.
-
-Sample ``.vimrc``:
+sample ``.vimrc``:
 
 ```vim
 let g:project_use_nerdtree = 1
@@ -191,45 +216,6 @@ Project  '~/.vim/bundle/ctrlp.vim'              , 'ctrlp'
 Project  '~/.vim/bundle/ctrlp-z'                , 'ctrlp-z'
 Project  '~/.vim/bundle/vim-eval'               , 'eval'
 ```
-
-## Options
-* ``project_enable_welcome``: show project list on start (values: 0, 1; default: 1). When set
-to 1, the 'welcome' project list screen is displayed when vim is started with an empty buffer.
-  ```vim
-  g:project_enable_welcome=0
-  ```
-
-* ``project_use_nerdtree``: NERDTree integration (values: 0, 1; default: 0). When set to 1, integration
-with NERDtree is enabled.
-  ```vim
-  g:project_use_nerdtree=1
-  ```
-
-* ``project_unlisted_buffer``: hide 'welcome' buffer from buffer list (values: 0, 1; default: 1).
-When set to 1, the 'welcome' project list buffer does not appear in the buffer list (nobuflisted is
-set).
-   ```vim
-   g:project_unlisted_buffer=0
-   ```
-
-* ``project_enable_tab_title_gui``: show project name in tab title (values: 0, 1; default: 1).
-When set to 1, the project to which the file belongs is shown in the tab's title in GUI vim.
-  ```vim
-  g:project_enable_tab_title_gui=0
-  ```
-
-* ``project_enable_tab_title_term``: show project name in tab title (values: 0, 1; default: 0).
-When set to 1, the project to which the file belongs is shown in the tab's title in terminal vim.
-  ```vim
-  g:project_enable_tab_title_term=1
-  ```
-
-* ``project_enable_win_title``: show current working directory in window title (values: 0, 1;
-default: 1). When set to 1, the current working directory is shown in the window's title bar in GUI
-vim.
-  ```vim
-  g:project_enable_win_title=0
-  ```
 
 ## Interactive
 From the ``cmdline mode``.

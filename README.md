@@ -8,6 +8,7 @@ Changes:
 - New command ``CallbackAllProjects`` to add a callback to all defined projects.
 - New commands ``TabWelcome`` and ``TabProject``
 - New entity type 'section'; new commands ``Section`` and ``CallbackAllSections``
+- Add support for wildcards in project paths
 
 Changes are licensed under the same terms as the original
 

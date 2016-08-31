@@ -1,8 +1,8 @@
 command! -nargs=+ Project
-\ call project#config#project(<args>)
+\ call project#config#project('project', <args>)
 
 command! -nargs=+ Section
-\ call project#config#section(<args>)
+\ call project#config#project('section', <args>)
 
 command! -nargs=+ File
 \ call project#config#title(<args>)

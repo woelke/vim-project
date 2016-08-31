@@ -3,13 +3,13 @@ let s:pos = 0
 
 function! s:full_path(arg) abort
   let arg = substitute(a:arg, '\v\C/+$', '', '')
-  let arg = resolve(fnamemodify(arg, ":p"))
+  let arg = resolve(expand(fnamemodify(arg, ":p")))
   let arg = substitute(arg, '\v\C\\+$', '', '')
   let arg = substitute(arg, '\v\C/+$', '', '')
   return arg
 endfunction
 
-function! project#config#project(arg, ...) abort
+function! project#config#project(type, arg, ...) abort
   if a:arg[0] ==# "/" || a:arg[0] ==# "~" || a:arg[1] ==# ':'
     let project = s:full_path(a:arg)
   else
@@ -24,27 +24,7 @@ function! project#config#project(arg, ...) abort
   if !isdirectory(project)
     return
   endif
-  let s:projects[title] = { "type": "project", "event": event, "project": project, "title": title, "callbacks": [], "pos": s:pos}
-  let s:pos += 1
-  call s:setup()
-endfunction
-
-function! project#config#section(arg, ...) abort
-  if a:arg[0] ==# "/" || a:arg[0] ==# "~" || a:arg[1] ==# ':'
-    let project = s:full_path(a:arg)
-  else
-    let project = s:full_path(g:project_dir.s:get_sep().a:arg)
-  endif
-  if len(a:000) > 0
-    let title = a:1
-  else
-    let title = fnamemodify(project, ":t")
-  endif
-  let event = project.s:get_sep()."*"
-  if !isdirectory(project)
-    return
-  endif
-  let s:projects[title] = { "type": "section", "event": event, "project": project, "title": title, "callbacks": [], "pos": s:pos}
+  let s:projects[title] = { "type": a:type, "event": event, "project": project, "title": title, "callbacks": [], "pos": s:pos}
   let s:pos += 1
   call s:setup()
 endfunction

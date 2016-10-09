@@ -9,6 +9,8 @@ Changes:
 - New commands ``TabWelcome`` and ``TabProject``
 - New entity type 'section'; new commands ``Section`` and ``CallbackAllSections``
 - Add support for wildcards in project paths
+- Pass additional argument to callbacks indicating whether this is a 'leaf' project
+  (has no further subprojects)
 
 Changes are licensed under the same terms as the original
 

@@ -78,6 +78,32 @@ function! project#config#project_path(arg, ...) abort
   endif
 endfunction
 
+function! s:is_leaf(project) abort
+  let buf = expand('<amatch>')
+
+  if (a:project["type"] ==# "project") || (a:project["type"] ==# "section")
+    let file = a:project["project"]
+  else
+    let file = a:project["event"]
+  endif
+
+  let len = strlen(file)
+
+  for v in values(s:projects)
+    if (v["type"] ==# "project") || (v["type"] ==# "section")
+      let file = v["project"]
+    else
+      let file = v["event"]
+    endif
+
+    if (match(buf, file) == 0) && (strlen(file) > len)
+        return 0
+    endif
+  endfor
+
+  return 1
+endfunction
+
 function! s:callback(title) abort
   let project = s:projects[a:title]
   let type = project["type"]
@@ -85,9 +111,9 @@ function! s:callback(title) abort
   if len(callbacks) > 0
     for callback in callbacks
       if type(callback) ==# type("")
-        execute "call ".callback."(\"".a:title."\")"
+        execute "call ".callback."(\"".a:title."\",\"".s:is_leaf(project)."\")"
       else
-        call callback.invoke(a:title)
+        call callback.invoke(a:title,s:is_leaf(a:title))
       endif
     endfor
   endif

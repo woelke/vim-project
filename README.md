@@ -11,6 +11,7 @@ Changes:
 - Add support for wildcards in project paths
 - Pass additional argument to callbacks indicating whether this is a 'leaf' project
   (has no further subprojects)
+- In Welcome buffer, break long lines with indent
 
 Changes are licensed under the same terms as the original
 

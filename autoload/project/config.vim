@@ -142,6 +142,7 @@ function! project#config#welcome() abort
   if get(g:, 'project_unlisted_buffer', 1)
     setlocal nobuflisted
   endif
+  setlocal breakindent breakindentopt=shift:28
   setfiletype project
 
   let special = get(g:, 'project_enable_special', 1)

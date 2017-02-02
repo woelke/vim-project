@@ -142,7 +142,6 @@ function! project#config#welcome() abort
   if get(g:, 'project_unlisted_buffer', 1)
     setlocal nobuflisted
   endif
-  setlocal breakindent breakindentopt=shift:28
   setfiletype project
 
   let special = get(g:, 'project_enable_special', 1)
@@ -199,6 +198,7 @@ function! project#config#welcome() abort
     call append('$', ['', '   [q]  <quit>'])
   endif
 
+  execute 'setlocal breakindent breakindentopt=shift:' . (max_title_length + 11)
   setlocal nomodifiable nomodified
 
   nnoremap <buffer><silent> e :enew<cr>

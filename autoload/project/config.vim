@@ -161,27 +161,38 @@ function! project#config#welcome() abort
   let max_title_length = 0
   let max_file_length = 0
   for v in projects
-    if (v["type"] ==# "project") || (v["type"] ==# "section")
+    if (v["type"] ==# "project")
       let file = v["project"]
+      let title = v["title"]
+    elseif (v["type"] ==# "section")
+      let file = v["project"]
+      let title = "{" . v["title"] . "}"
     else
       let file = v["event"]
+      let title = v["title"]
     endif
     if len(file) > max_file_length
       let max_file_length = len(file)
     endif
-    if len(v["title"]) > max_title_length
-      let max_title_length = len(v["title"])
+    if len(title) > max_title_length
+      let max_title_length = len(title)
     endif
   endfor
   for v in projects
-    if (v["type"] ==# "project") || (v["type"] ==# "section")
+    if (v["type"] ==# "project")
       let file = v["project"]
+      let title = v["title"]
+      let lcd = " \\| lcd ".v["project"]
+    elseif (v["type"] ==# "section")
+      let file = v["project"]
+      let title = "{" . v["title"] . "}"
       let lcd = " \\| lcd ".v["project"]
     else
       let file = v["event"]
+      let title = v["title"]
       let lcd = ""
     endif
-    let line = printf(printf('   ['. cnt .']'.padding.'%s '.file, '%-'.max_title_length.'s'), v["title"])
+    let line = printf(printf('   ['. cnt .']'.padding.'%s '.file, '%-'.max_title_length.'s'), title)
     call append('$', line)
     if get(g:, 'project_use_nerdtree', 0) && isdirectory(file)
       execute 'nnoremap <silent><buffer> '. cnt .' :enew \| NERDTree '. s:escape(file).lcd."<cr>"

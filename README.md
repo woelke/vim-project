@@ -2,9 +2,11 @@
 
 Changes:
 
+- New commands ``LockProject`` and ``UnlockProject`` to lock and unlock,
+  respectively, the current working directory
 - New command ``GoProject`` to select a project from the ``cmdline mode``
-- New options ``project_enable_tab_title_gui`` and ``project_enable_win_title``.
-- Add support for tabline; new option ``project_enable_tab_title_term``.
+- New options ``project_enable_tab_title_gui`` and ``project_enable_win_title``
+- Add support for tabline; new option ``project_enable_tab_title_term``
 - New command ``CallbackAllProjects`` to add a callback to all defined projects.
 - New commands ``TabWelcome`` and ``TabProject``
 - New entity type 'section'; new commands ``Section`` and ``CallbackAllSections``
@@ -30,6 +32,10 @@ It's used inside the ``cmdline mode`` to switch to one of the defined projects.
 The required parameter is the ``title`` of the project without quotation. Completion
 is supported.
 
+* ``LockProject``
+Lock the project's current working directory so opening a file from the project doesn't reset
+the window's current working directory to the project directory.
+
 * ``Section``
 It's used inside the ``.vimrc``. Similar to ``Project``, except that lcd is executed only when the
 section is selected from the Welcome menu or with GoProject or TabProject. The lcd is not changed
@@ -38,6 +44,9 @@ when opening a file in the section.
 * ``TabProject`` is like ``GoProject``, but opens the project in a new tab.
 
 * ``TabWelcome`` is like ``Welcome``, but opens in a new tab.
+
+* ``UnlockProject``
+Undo the effects of ``LockProject``
 
 New Options:
 

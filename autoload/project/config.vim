@@ -24,9 +24,15 @@ function! project#config#project(type, arg, ...) abort
   if !isdirectory(project)
     return
   endif
-  let s:projects[title] = { "type": a:type, "event": event, "project": project, "title": title, "callbacks": [], "pos": s:pos}
+  let s:projects[title] = { "type": a:type, "event": event, "project": project, "title": title, "callbacks": [], "pos": s:pos, "lcd_locked": 0 }
   let s:pos += 1
   call s:setup()
+endfunction
+
+function! project#config#set_lock(lock) abort
+    if exists("b:title")
+        let s:projects[b:title]["lcd_locked"] = a:lock
+    endif
 endfunction
 
 function! project#config#callback(title, callback) abort
@@ -278,13 +284,19 @@ function! s:sort(d1, d2) abort
   return a:d1["pos"] - a:d2["pos"]
 endfunction
 
+function! s:lcd(title) abort
+    if ! s:projects[a:title]["lcd_locked"]
+        execute "lcd " . s:projects[a:title]["project"]
+    endif
+endfunction
+
 function! s:setup() abort
   augroup vim_project
     autocmd!
     let projects = sort(values(s:projects), "s:sort")
     for v in projects
       if v["type"] ==# "project"
-        let autocmd = "autocmd BufEnter ".s:back_to_slash(v["event"])." lcd ".v["project"]." | let b:title = \"".v["title"]."\" | call s:callback(\"".v["title"]."\")"
+        let autocmd = "autocmd BufEnter ".s:back_to_slash(v["event"])." call s:lcd(\"".v["title"]."\") | let b:title = \"".v["title"]."\" | call s:callback(\"".v["title"]."\")"
       else
         let autocmd = "autocmd BufEnter ".s:back_to_slash(v["event"])." let b:title = \"".v["title"]."\" | call s:callback(\"".v["title"]."\")"
       endif

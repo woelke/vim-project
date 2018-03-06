@@ -29,7 +29,7 @@ function! project#config#project(type, arg, ...) abort
   call s:setup()
 endfunction
 
-function! project#config#set_lock(lock) abort
+function! project#config#set_directory_lock(lock) abort
     if exists("b:title")
         let s:projects[b:title]["lcd_locked"] = a:lock
     endif

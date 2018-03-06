@@ -2,7 +2,7 @@
 
 Changes:
 
-- New commands ``LockProject`` and ``UnlockProject`` to lock and unlock,
+- New commands ``LockProjectDirectory`` and ``UnlockProjectDirectory`` to lock and unlock,
   respectively, the current working directory
 - New command ``GoProject`` to select a project from the ``cmdline mode``
 - New options ``project_enable_tab_title_gui`` and ``project_enable_win_title``
@@ -32,7 +32,7 @@ It's used inside the ``cmdline mode`` to switch to one of the defined projects.
 The required parameter is the ``title`` of the project without quotation. Completion
 is supported.
 
-* ``LockProject``
+* ``LockProjectDirectory``
 Lock the project's current working directory so opening a file from the project doesn't reset
 the window's current working directory to the project directory.
 
@@ -45,8 +45,8 @@ when opening a file in the section.
 
 * ``TabWelcome`` is like ``Welcome``, but opens in a new tab.
 
-* ``UnlockProject``
-Undo the effects of ``LockProject``
+* ``UnlockProjectDirectory``
+Undo the effects of ``LockProjectDirectory``
 
 New Options:
 

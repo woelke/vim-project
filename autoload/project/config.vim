@@ -188,22 +188,22 @@ function! project#config#welcome() abort
     if (v["type"] ==# "project")
       let file = v["project"]
       let title = v["title"]
-      let lcd = " \\| lcd ".v["project"]
+      let tcd = " \\| tcd ".v["project"]
     elseif (v["type"] ==# "section")
       let file = v["project"]
       let title = "{" . v["title"] . "}"
-      let lcd = " \\| lcd ".v["project"]
+      let tcd = " \\| tcd ".v["project"]
     else
       let file = v["event"]
       let title = v["title"]
-      let lcd = ""
+      let tcd = ""
     endif
     let line = printf(printf('   ['. cnt .']'.padding.'%s '.file, '%-'.max_title_length.'s'), title)
     call append('$', line)
     if get(g:, 'project_use_nerdtree', 0) && isdirectory(file)
-      execute 'nnoremap <silent><buffer> '. cnt .' :enew \| NERDTree '. s:escape(file).lcd."<cr>"
+      execute 'nnoremap <silent><buffer> '. cnt .' :enew \| NERDTree '. s:escape(file).tcd."<cr>"
     else
-      execute 'nnoremap <silent><buffer> '. cnt .' :edit '. s:escape(file).lcd."<cr>"
+      execute 'nnoremap <silent><buffer> '. cnt .' :edit '. s:escape(file).tcd."<cr>"
     endif
     let cnt += 1
     if cnt == 10
@@ -241,15 +241,15 @@ function! project#config#goto(bang, title) abort
     let v = s:projects[a:title]
     if (v["type"] ==# "project") || (v["type"] ==# "section")
       let file = v['project']
-      let lcd = ' | lcd ' . v['project']
+      let tcd = ' | tcd ' . v['project']
     else
       let file = v['event']
-      let lcd = ''
+      let tcd = ''
     endif
     if get(g:, 'project_use_nerdtree', 0) && isdirectory(file)
-      execute 'enew' . a:bang . ' | NERDTree ' . s:escape(file) . lcd
+      execute 'enew' . a:bang . ' | NERDTree ' . s:escape(file) . tcd
     else
-      execute 'edit' . a:bang . ' ' . s:escape(file) . lcd
+      execute 'edit' . a:bang . ' ' . s:escape(file) . tcd
     endif
   else
     echo 'Unknown project ' . a:title
@@ -284,9 +284,9 @@ function! s:sort(d1, d2) abort
   return a:d1["pos"] - a:d2["pos"]
 endfunction
 
-function! s:lcd(title) abort
+function! s:tcd(title) abort
     if ! s:projects[a:title]["lcd_locked"]
-        execute "lcd " . s:projects[a:title]["project"]
+        execute "tcd " . s:projects[a:title]["project"]
     endif
 endfunction
 
@@ -296,7 +296,7 @@ function! s:setup() abort
     let projects = sort(values(s:projects), "s:sort")
     for v in projects
       if v["type"] ==# "project"
-        let autocmd = "autocmd BufEnter ".s:back_to_slash(v["event"])." call s:lcd(\"".v["title"]."\") | let b:title = \"".v["title"]."\" | call s:callback(\"".v["title"]."\")"
+        let autocmd = "autocmd BufEnter ".s:back_to_slash(v["event"])." call s:tcd(\"".v["title"]."\") | let b:title = \"".v["title"]."\" | call s:callback(\"".v["title"]."\")"
       else
         let autocmd = "autocmd BufEnter ".s:back_to_slash(v["event"])." let b:title = \"".v["title"]."\" | call s:callback(\"".v["title"]."\")"
       endif
